@@ -1,0 +1,2344 @@
+Laravel Restaurant Project
+
+#################################### SETUP CONFIG
+
+#CHECK EVERYTHING WE NEED, 
+#OPEN CMD
+
+php -v 
+php --ini (Loaded Config File: xampp\php\php.ini) 
+composer -v
+npm -v 
+node -v 
+7z
+
+try: 
+composer glocal require laravel/installer
+
+
+# phpmyadmin
+Create Database - 'restaurant' 
+
+# .env 
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE= restaurant
+DB_USERNAME=root
+DB_PASSWORD=
+
+
+# TERMINAL
+php artisan key:generate
+php artisan serve
+
+
+
+
+
+
+# RESTAURANT > PUBLIC
+https://github.com/Patargz12/Pat_Cafe.git
+PASTE EVERYTHING *index.html IN PUBLIC FOLDER!!
+
+
+# RESOURCES > VIEWS > *create "home.blade.php"
+paste index.html from "public/index/html"
+
+
+# TERMINAL
+php artisan make:controller HomeController
+*check app/Http/Controllers/HomeController.php
+
+
+# routes > web.php 
+
+use App\Http\Controllers\HomeController;
+Route::get("/home",[HomeController::class,"index"]);
+
+
+# APP / HTTPS / CONTROLLERS / HOMECONTROLLER.PHP
+
+
+class HomeController extends Controller
+{
+    public function index()
+    {
+        return view('home');
+    }
+}
+
+
+
+
+#################################### LOGIN AND REGISTRATION
+
+# TERMINAL
+MAKE SURE! 'extension: fileinfo" uncommented
+composer require laravel/jetstream
+
+php artisan jetstream:install livewire
+
+npm install
+
+npm run dev
+
+# DATABASE > MIGRATIONS > 2014_10_12_000000_create_users_table.php
+
+PASTE THIS SA BABA NG EMAIL!!
+            
+$table->string('usertype')->default(0);
+
+# TERMINAL 
+
+php artisan migrate
+
+# TRY NYO MAG LOGIN AND REGISTER
+
+# YUNG CODE NYAN NASA resources/views/welcome.blade.php
+
+#LOGIN KAYO! THEN REMOVE /DASHBOARD
+
+#COPY THIS ========================
+
+<li>
+    @if (Route::has('login'))
+        <div class="z-10 p-6 text-right sm:fixed sm:right-0 sm:top-0">
+            @auth
+    <li>
+        <x-app-layout>
+
+        </x-app-layout>
+    </li>
+@else
+    <li>
+        <a class="font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500"
+            href="{{ route('login') }}">Log in</a>
+    </li>
+    @if (Route::has('register'))
+        <li>
+            <a class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500"
+                href="{{ route('register') }}">Register</a>
+        </li>
+    @endif
+@endauth
+</div>
+@endif
+
+# COPY THIS ============================
+
+
+# PASTE NYO SA resources/views/home.blade.php line (find around conta line 85 then double enter)
+
+# RESOURCES / VIEWS / navigation-menu.blade.php
+
+# CONFIG / fortify.php
+
+around line 76 
+
+'home' => '/'
+
+# RESOURCES / VIEWS / LAYOUTS / app.blade.php 
+
+Look for @livewire($navigation-menu)
+
+DELETE "min-h-screen bg-gray-100"
+
+# RESOURCES / VIEWS / navigation-menu.blade.php
+
+delete logo & navigation links
+
+
+
+
+#########  FOR LARAVEL JETSTREAM COMPONENTS 
+
+# RESOURCES / VIEWS / AUTH / authentication-card-logo.blade.php 
+
+* REMOVE EVERYTHING AND PASTE THIS!! =============================
+
+
+<a href="/">
+    <img class = "mb-5" src = "{{ asset('assets/images/klassy-logo-big.png') }}" width="200">
+</a>
+
+==================================================
+
+* CHECK LOGIN AND REGISTER! 
+
+
+
+# FOR SHOW PASSWORDS! 
+
+# RESOURCES / VIEWS / AUTH / LOGIN.BLADE.PHP 
+
+* DELETE REMEMBER ME!
+
+* BELOW PASSWORD PASTE THIS!! 
+
+==========================================================
+
+<div class="mt-4 block">
+    <input class="h-4 w-4 rounded-md border-gray-300 text-indigo-600 focus:ring-indigo-500"
+        onclick="togglePasswordVisibility()" type="checkbox" />
+    <label class="ml-2 text-sm text-gray-600" for="show_password">Show Password</label>
+</div>
+
+=========================================================
+
+
+* PASTE THIS AT THE VERY BOTTOM!!
+
+==========================================================
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    }
+</script>
+
+
+======================================================
+
+# RESOURCES / VIEWS / AUTH / register.blade.php 
+
+# DO IT ON REGISTRATION.BLADE.PHP 
+
+*PASTE THIS BELOW "password_confirmation"
+
+==================================================================
+
+
+<div class = "mt-1">
+    <input class="h-4 w-4 rounded-md border-gray-300 text-indigo-600 focus:ring-indigo-500"
+        onclick="togglePasswordVisibility()" type="checkbox" />
+    <label class="ml-2 text-sm text-gray-600" for="show_password">Show Password</label>
+
+</div>
+
+
+=================================================================
+
+# RESOURCES / VIEWS / AUTH / register.blade.php 
+
+# PASTE THIS AT THE VERY BOTTOM!
+
+=================================================================
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('password');
+        var passwordInput2 = document.getElementById('password_confirmation');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+
+        if (passwordInput2.type === 'password') {
+            passwordInput2.type = 'text';
+        } else {
+            passwordInput2.type = 'password';
+        }
+    }
+</script>
+
+
+==================================================================
+
+# RESOURCES / VIEWS / PROFILE / update-password.blade.php 
+
+* BELOW "<x-input-error class="mt-2" for="password_confirmation" />" 
+
+* PASTE THIS!! 
+
+======================================================================
+
+<div class="mt-4 block">
+    <input class="h-4 w-4 rounded-md border-gray-300 text-indigo-600 focus:ring-indigo-500"
+        onclick="togglePasswordVisibility()" type="checkbox" />
+    <label class="ml-2 text-sm text-gray-600" for="show_password">Show Password</label>
+</div>
+
+====================================================================
+
+* PASTE THIS AT THE BETTER BOTTOM (update-password.blade.php)
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById('current_password');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+
+        var passwordInput2 = document.getElementById('password');
+        if (passwordInput2.type === 'password') {
+            passwordInput2.type = 'text';
+        } else {
+            passwordInput2.type = 'password';
+        }
+
+        var passwordInput3 = document.getElementById('password_confirmation');
+        if (passwordInput3.type === 'password') {
+            passwordInput3.type = 'text';
+        } else {
+            passwordInput3.type = 'password';
+        }
+    }
+</script>
+
+
+#### FORGOT PASSWORD FEATURE
+#### MAKE SURE YOU HAVE 1 GMAIL ACCOUNT WITH 2-FACTOR-AUTHETICATION 
+
+# .env 
+
+* REPLACE MAILER WITH THIS! 
+
+=============================================
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=465
+MAIL_USERNAME=arganzapatrick@gmail.com
+MAIL_PASSWORD=pwstmwzkpudyxrdz
+MAIL_ENCRYPTION=ssl
+MAIL_FROM_ADDRESS="arganzapatrick@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+
+============================================
+
+FOR MAIL_PASSWORD: 
+
+GMAIL > SETTINGS > SECURITY > 2 FACTOR AUTH > LOGIN > APP PASSWORDS > CREATE
+
+
+# CONFIG / mail.php 
+
+
+* FIND 'MAIL_FROM_ADDRESS' AROUND LINE 99 
+
+
+
+REPLACE hello@example.com TO "YOUR_EMAIL" 
+REPLACE example TO "Pat_Cafe" 
+
+
+# TERMINAL *for any email edits
+
+
+php artisan config:cache
+
+# FOR EDITING EMAIL TEMPLATE 
+
+php artisan vendor:publish --tag=laravel-notifications
+php artisan vendor:publish --tag=laravel-mail
+
+
+#################################### ADMIN FEATURE
+
+# RESOURCES > VIEWS / 
+
+CREATE admin folder -> CREATE adminhome.blade.php
+
+# CONFIG > fortify.php 
+
+around line 76 
+
+from 
+
+'home' => '/'    TO      'home' => 'redirects'
+
+
+# ROUTES > web.php
+
+Route::get('/redirects', [HomeController::class, 'redirects']);
+
+# APP > HTTP > CONTROLLERS > HomeController.php
+
+use Illuminate\Support\Facades\Auth;
+
+
+    public function redirects()
+    {
+        $usertype = Auth::user()->usertype;
+
+        if ($usertype == '1') {
+            return view('admin.adminhome');
+        } else {
+            return view('home');
+        }
+    }
+
+
+# ROUTES / web.php
+
+change view('welcome') to view('home')
+
+ADMIN TEMPLATE
+
+
+# PUBLIC FOLDER 
+
+* create an admin folder inside public
+
+git clone https://github.com/Patargz12/Cafe_Admin.git
+
+* paste index and assets inside admin folder 
+
+# RESOURCES / VIEWS / ADMIN / adminhome.blade.php
+
+COPY =====
+
+<x-app-layout>
+
+</x-app-layout>
+
+COPY ===== 
+
+PASTE NYO SA adminhome.blade.php 
+
+# PUBLIC / ADMIN /
+
+copy index/html PASTE NYO SA adminhome.blade.php 
+
+
+# REGISTER 1 ADMIN ACCOUNT AND TURN USERTYPE TO 1
+
+# CHANGE ALL "assets/.../..." to "admin/assets/.../..."
+
+# DELETE CONTENTS BELOW SIDEBAR UNTIL FOOTER
+
+# DELETE <li class = "nav-item profile" />
+
+# DELETE Basic UI Elements, Icons, User Pages, Documentation on SIDEBAR
+
+# CHANGE THE REMANING FOUR TO Users, Foods, Chefs, Reservations
+
+# CUT THE 'container-scroller' upto 'main-panel-ends' 
+
+# DELETE 2 unnecessary </div> 'main-panel-ends' and 'page-body-wrapper ends'
+
+the last part must be
+
+" 
+<!-- partial -->
+</div>
+"
+
+# RESOURCES / ADMIN / *CREATE A NEW FILE navbar.blade.php
+
+PASTE NAVBAR!
+
+# RESOURCES / ADMIN / adminhome.blade.php
+
+below <body> 
+
+@include('admin.navbar'); 
+
+-- COPY ALL INSIDE <head>
+
+# RESOURCES / ADMIN / *CREATE admincss.blade.php
+
+PASTE EVERYTHING HERE
+
+# RESOURCES / ADMIN / adminhome.blade.php
+
+inside <head>
+
+@include('admin.admincss');
+
+COPY ALL SCRIPT
+
+# RESOURCES / ADMIN / *CREATE adminscript.blade.php
+
+PASTE EVERYTHING HERE
+
+# RESOURCES / ADMIN / adminhome.blade.php
+
+above </body>
+
+@include('admin.adminscript');
+
+
+
+
+
+
+#################################### DISPLAY USERS FROM DATABASE
+
+# RESOURCES / ADMIN / navbar.blade.php
+
+look for "Users", Change href to ---      href = "{{url('/users')}}"
+
+# ROUTES / web.php 
+
+use App\Http\Controllers\AdminController;
+
+Route::get('/users', [AdminController::class, 'user']);
+
+php artisan make:controller AdminController
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+    public function user()
+    {
+        return view('admin.users');
+    }
+	
+# RESOURCES / VIEWS / ADMIN / *create users.blade.php 
+
+# RESOURCES / VIEWS / ADMIN / navbar.blade.php
+
+Delete "container-scroller"
+
+# RESOURCES / VIEWS / ADMIN / users.blade.php
+ 
+ 
+ ---------------------------------------------------
+ 
+<x-app-layout>
+
+</x-app-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        @include('admin.admincss')
+    </head>
+
+    <body>
+        <div class = "container-scroller">
+            @include('admin.navbar')
+
+            <div style = "position: relative; top: 60px; right: -150px">
+                <h1>USERS TABLE</h1>
+                <table bgcolor = "black" border="3px" class = "table" style="color: white">
+                    <tr>
+                        <th style = "padding: 30px">Name</th>
+                        <th style = "padding: 30px">Email</th>
+                        <th style = "padding: 30px">Action</th>
+                    </tr>
+
+                    @foreach ($data as $data)
+                        <tr align = "center">
+                            <td>{{ $data->name }}</td>
+                            <td>{{ $data->email }}</td>
+                            @if ($data->usertype == '0')
+                                <td><a class = "btn btn-danger" href = "{{ url('/deleteuser', $data->id) }}">Delete</a>
+                                </td>
+                            @else
+                                <td><a>Not Allowed</a></td>
+                            @endif
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
+        @include('admin.adminscript')
+    </body>
+
+</html>
+
+-------------------------------------------------
+
+# ERROR $data 
+
+# APP / HTTP / CONTROLLERS / AdminController.php
+
+use App\Models\User;
+
+function user: -----
+
+$data = user::all();
+return view('admin.users',compact("data"));
+    
+# ROUTES / web.php 
+
+Route::get('/deleteuser/{id}', [AdminController::class, 'deleteuser']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function deleteuser($id)
+{
+    $data = user::find($id);
+
+    $data->delete();
+
+    return redirect()->back();
+}
+
+
+
+
+#################################### FOOD MENU BACK END
+
+# RESOURCES / VIEWS / home.blade.php
+
+copy all menu-area
+
+* create food.blade.php file 
+
+paste everything there!
+
+* home.blade.php 
+
+*above <!-- ***** Chefs Area Starts ***** -->
+
+@include('food');
+
+# TERMINAL 
+
+php artisan make:model Food -m
+
+# DATABASE / MIGRATIONS / CREATE_FOOD_
+
+below $table->id();
+
+$table->string("title")->nullable();
+$table->string("price")->nullable();
+$table->string("image")->nullable();
+$table->string("description")->nullable();
+
+# RESOURCES / VIEWS / ADMIN / navbar.blade.php 
+
+FIND FOOD -> TURN HREF TO     
+
+href = " {{url('/foodmenu')}}" 
+
+# ROUTES / web.php 
+
+Route::get('/foodmenu', [AdminController::class, 'foodmenu']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function foodmenu()
+{
+
+    return view('admin.foodmenu');
+}
+
+# RESOURCES / VIEWS / ADMIN / *create foodmenu.blade.php 
+
+PASTE THIS ===================================================================
+
+<x-app-layout>
+
+</x-app-layout>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        @include('admin.admincss')
+    </head>
+
+    <body>
+
+        <div class = "container-scroller">
+
+            @include('admin.navbar')
+
+            <div style = "position: relative; top: 60px; right: -150px">
+
+                <form action="{{ url('/uploadfood') }}" enctype="multipart/form-data" method="post"
+                    style="max-width: 400px; margin: auto;">
+                    @csrf <!-- Cross-Site Request Forgery -->
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="title" style="display: inline-block; width: 100px;">Title:</label>
+                        <input id="title" name="title" placeholder="Write a title" required
+                            style="color: blue; width: calc(100% - 120px);" type="text" />
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="price" style="display: inline-block; width: 100px;">Price:</label>
+                        <input id="price" name="price" placeholder="Price" required
+                            style="color: blue; width: calc(100% - 120px);" type="number" />
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="image" style="display: inline-block; width: 100px;">Image:</label>
+                        <input id="image" name="image" required type="file" />
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="description" style="display: inline-block; width: 100px;">Description:</label>
+                        <textarea id="description" name="description" placeholder="Description" required
+                            style="color: blue; width: calc(100% - 120px);"></textarea>
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary" style="background-color: white; color: black;"
+                            type="submit">Save</button>
+                    </div>
+                </form>
+                <br>
+                <div>
+                    <table bgcolor = "black" class = "table" style="color: white">
+                        <tr>
+                            <th style = "padding: 30px">Food Name</th>
+                            <th style = "padding: 30px">Price</th>
+                            <th style = "padding: 30px">Description</th>
+                            <th style = "padding: 30px">Image</th>
+                            <th style = "padding: 30px">Action</th>
+                            <th style = "padding: 30px">Action2</th>
+                        </tr>
+
+                        {{-- @foreach ($data as $data)
+                            <tr align = "center">
+                                <td>{{ $data->title }}</td>
+                                <td>P{{ $data->price }}</td>
+                                <td>{{ $data->description }}</td>
+                                <td><img height="600" src = "/foodimage/{{ $data->image }}" width="600" /></td>
+                                <td><a class = "btn btn-danger" href = "{{ url('/deletemenu', $data->id) }} ">Delete</a>
+                                </td>
+                                <td><a class = "btn btn-info" href = "{{ url('/updateview', $data->id) }}">Update</a>
+                                </td>
+                            </tr>
+                        @endforeach --}}
+                    </table>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </div>
+            </div>
+        </div>
+        @include('admin.adminscript')
+    </body>
+
+</html>
+
+
+====================================================================================
+
+
+
+# ROUTES / web.php
+
+Route::post('/uploadfood', [AdminController::class, 'upload']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+
+PASTE THIS ==============================================================
+
+use Illuminate\Http\Request;
+
+public function upload(Request $request)
+{
+    $data = new food;
+
+    $image = $request->image;
+
+    $imagename = time().'.'.$image->getClientOriginalExtension();
+
+    $request->image->move('foodimage', $imagename);
+
+    $data->image = $imagename;
+
+    $data->title = $request->title;
+
+    $data->price = $request->price;
+
+    $data->description = $request->description;
+
+    $data->save();
+
+    return redirect()->back();
+
+}
+
+# TRY TO ADD NEW FOOD
+
+
+==================================================================================
+
+
+######################################### DISPLAY FOOD DATA ON FRONT-END
+
+# APP / HTTP / HomeController.php 
+
+use App\Models\Food;
+
+
+*on return view('home');
+
+$data = food::all();
+return view('home',compact("data"));
+
+# RESOURCES / VIEWS / home.blade.php
+
+*remove "class = 'item' " keep ONLY 1!!
+
+* PASTE THIS BELOW class = "owl-menu-item"
+
+==================================================================================
+
+
+@foreach ($data as $data)
+<form action = "{{ url('/addcart', $data->id) }}" method = "post">
+    @csrf
+    <div class="item">
+        <div class='card'
+            style = "background-image: url('/foodimage/{{ $data->image }}');">
+            <div class="price">
+                <h6>P{{ $data->price }}</h6>
+            </div>
+            <div class='info'>
+                <h1 class='title'>{{ $data->title }}</h1>
+                <p class='description'>
+                    {{ $data->description }}
+                </p>
+                <div class="main-text-button">
+                    <div class="scroll-to-section"><a href="#reservation">Make Reservation <i
+                                class="fa fa-angle-down"></i></a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class = "mt-3">
+            <input min = "1" name ="quantity" style = "width: 80px;" type = "number"
+                value="1">
+            <input class = "btn btn-primary" style="color: black" type = "submit"
+                value = "add cart" />
+        </div>
+    </div>
+
+</form>
+@endforeach
+
+
+============================================================================
+
+# ERROR $DATA  *fix !11111111111
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+*on public function redirects(); ADD THIS ABOVE $usertype = Auth 
+
+$data = food::all();
+
+* THEN CHANGE "return view('home')"  TO   "return view('home',compact('data'));"
+
+* ERROR *DATA !!!!!!!!!!!
+
+# ROUTES / web.php 
+
+*REMOVE!!!
+
+Route::get('/', function () {
+    return view('home');
+});
+
+
+# FIND Route::get('/home', [HomeController::class, 'index']);
+
+*CHANGE "/home" TO   "/" 
+
+
+################################################### CREATE DELETE FUNCTION ON FOOD 
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+*find public function foodmenu(); DELETE EVERYTHING INSIDE!
+
+* PASTE THIS! 
+
+$data = food::all();
+
+return view('admin.foodmenu',compact("data"));
+
+# ROUTES / web.php 
+
+Route::get('/deletemenu/{id}', [AdminController::class, 'deletemenu']);
+
+# HTTP / APP / CONTROLLERS / AdminController.php 
+
+* PASTE THIS!!
+
+public function deleteuser($id)
+{
+    $data = user::find($id);
+
+    $data->delete();
+
+    return redirect()->back();
+}
+
+
+
+###################################### CREATE UPDATE FUNCTION ON FOOD  
+
+# ROUTES / WEB.PHP 
+
+Route::get('/updateview/{id}', [AdminController::class, 'updateview']);
+
+# APP / HTTP / CONTROLLERS / AppController.php  
+
+public function updateview($id)
+{
+    $data = food::find($id);
+
+    return view('admin.updateview', compact('data'));
+
+}
+
+# RESOURCES / VIEWS / ADMIN / *create updateview.blade.php
+
+
+!! PASTE THIS INSIDE updateview.blade.php ====================================
+
+<x-app-layout>
+
+</x-app-layout>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <base href = "/public">
+        @include('admin.admincss')
+    </head>
+
+    <body>
+        <div class = "container-scroller">
+            @include('admin.navbar')
+            <div bgcolor = "black" class = "table" style = "position: relative; top: 60px; right: -150px; color: white">
+                <form action = "{{ url('/update', $data->id) }}" enctype = "multipart/form-data" method = "post">
+
+                    @csrf <!-- Cross-Site Request Forgery -->
+                    <div>
+                        <label>Title</label>
+                        <input name = "title" placeholder = "Write a title" required style="color:white" type = "text"
+                            value = "{{ $data->title }}" />
+                    </div>
+
+                    <div>
+                        <label>Price</label>
+                        <input name = "price" required style="color:white" style="color:white" type = "num"
+                            value = "{{ $data->price }}" />
+                    </div>
+                    <div>
+                        <label>Description</label>
+                        <input name = "description" required style="color:white" type = "text"
+                            value = "{{ $data->description }}" />
+                    </div>
+
+                    <div>
+                        <label>Old Image</label>
+                        <img height="200" required src = "/foodimage/{{ $data->image }}" width="200">
+                    </div>
+
+                    <div>
+                        <label>Image</label>
+                        <input name = "image" required type = "file" />
+                    </div>
+
+                    <div>
+                        <button type = "submit" value = "Save">
+                            <button class = "btn" style = "background-color: white ; color: black" type = "submit"
+                                value = "Save">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @include('admin.adminscript')
+    </body>
+
+</html>
+
+
+
+========================================================================
+
+
+# ROUTES / WEB.PHP 
+
+Route::post('/update/{id}', [AdminController::class, 'update']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function update(Request $request, $id)
+{
+
+    $data = food::find($id);
+
+    $image = $request->image;
+
+    $imagename = time().'.'.$image->getClientOriginalExtension();
+
+    $request->image->move('foodimage', $imagename);
+
+    $data->image = $imagename;
+
+    $data->title = $request->title;
+
+    $data->price = $request->price;
+
+    $data->description = $request->description;
+
+    $data->save();
+
+    return redirect()->back();
+
+}
+
+
+# LOGOUT FIRST!!!! THEN TRY TO UPDATE FOOD 
+
+
+
+
+
+
+
+
+####################### RESERVATION FEATURE 
+
+# RESOURCES / VIEWS / *create reservation.blade.php 
+
+# RESOURCES / VIEWS / home.blade.php 
+
+* COPY RESERVATION CODE AND PASTE IT ON reservation.blade.php 
+
+# FINAL RESERVATION CODE 
+
+
+============================================
+
+
+        <!-- ***** Reservation Us Area Starts ***** -->
+        <section class="section" id="reservation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 align-self-center">
+                        <div class="left-text-content">
+                            <div class="section-heading">
+                                <h6>Contact Us</h6>
+                                <h2>Here You Can Make A Reservation Or Just walkin to our cafe</h2>
+                            </div>
+                            <p>Donec pretium est orci, non vulputate arcu hendrerit a. Fusce a eleifend riqsie, namei
+                                sollicitudin urna diam, sed commodo purus porta ut.</p>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="phone">
+                                        <i class="fa fa-phone"></i>
+                                        <h4>Phone Numbers</h4>
+                                        <span><a href="#">080-090-0990</a><br><a
+                                                href="#">080-090-0880</a></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="message">
+                                        <i class="fa fa-envelope"></i>
+                                        <h4>Emails</h4>
+                                        <span>klassy_cafe@gmail.com<br>
+                                            arganza@gmailcom</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="contact-form">
+                            <form action="{{ url('reservation') }}" id="contact" method="post">
+                                @csrf <!-- Cross-Site Request Forgery -->
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h4>Table Reservation</h4>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <fieldset>
+                                            <input id="name" name="name" placeholder="Your Name*" required=""
+                                                type="text">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <fieldset>
+                                            <input id="email" name="email" pattern="[^ @]*@[^ @]*"
+                                                placeholder="Your Email Address" required="" type="text">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-6 col-sm-12">
+                                        <fieldset>
+                                            <input id="phone" name="phone" placeholder="Phone Number*"
+                                                required="" type="text">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <input name = "guest" placeholder="Number of Guest" type = "number">
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div id="filterDate2">
+                                            <div class="input-group date" data-date-format="dd/mm/yyyy">
+                                                <input class="form-control" id="date" name="date"
+                                                    placeholder="dd/mm/yyyy" type="text">
+                                                <div class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-th"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <input name = "time" type = "time">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fieldset>
+                                            <textarea id="message" name="message" placeholder="Message" required="" rows="6"></textarea>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fieldset>
+                                            <button class="main-button-icon" id="form-submit" type="submit">Make A
+                                                Reservation</button>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ***** Reservation Area Ends ***** -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+            rel="stylesheet">
+
+        <script>
+            $(document).ready(function() {
+                // Initialize datepicker
+                $('#date').datepicker({
+                    format: 'dd/mm/yyyy',
+                    autoclose: true,
+                    startDate: new Date() // Set the start date to today
+                });
+            });
+        </script>
+
+
+
+
+=====================================================
+
+
+
+
+
+# TERMINAL 
+
+php artisan make:model Reservation -m
+
+
+# DATABASE / MIGRATIONS / create_reservations
+
+$table->string('email')->nullable;
+$table->string('phone')->nullable;
+$table->string('guest')->nullable;
+$table->string('date')->nullable;
+$table->string('time')->nullable;
+$table->string('message')->nullable;
+
+# TERMINAL 
+
+php artisan migrate 
+
+
+# ROUTES / web.php 
+
+Route::post('/reservation', [HomeController::class, 'reservation']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+use App\Models\Reservation;
+
+public function reservation(Request $request)
+{
+    $data = new reservation;
+
+    $data->name = $request->name;
+
+    $data->email = $request->email;
+
+    $data->phone = $request->phone;
+
+    $data->guest = $request->guest;
+
+    $data->date = $request->date;
+
+    $data->time = $request->time;
+
+    $data->message = $request->message;
+
+    $data->save();
+
+    return redirect()->back();
+
+}
+
+# TRY RESERVING AND CHECK DATABASE!
+
+# RESOURCES / VIEWS / ADMIN / *create adminreservation.blade.php 
+
+### PASTE THIS!!  =================================================
+
+
+<x-app-layout>
+
+</x-app-layout>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        @include('admin.admincss')
+    </head>
+
+    <body>
+
+        <div class = "container-scroller">
+
+            @include('admin.navbar')
+
+            <div style = "position: relative; top: 70px; right: -150;">
+                <table bgcolor = "black" border="1px" class = "table" style = "color: white">
+
+                    <tr>
+                        <th style = "padding: 30px;">Name</th>
+                        <th style = "padding: 30px;">Email</th>
+                        <th style = "padding: 30px;">Phone</th>
+                        <th style = "padding: 30px;">Date</th>
+                        <th style = "padding: 30px;">Time</th>
+                        <th style = "padding: 30px;">Message</th>
+
+                    </tr>
+
+                    @foreach ($data as $data)
+                        <tr align="center">
+                            <td>{{ $data->name }}</td>
+                            <td>{{ $data->email }}</td>
+                            <td>{{ $data->phone }}</td>
+                            <td>{{ $data->date }}</td>
+                            <td>{{ $data->time }}</td>
+                            <td>{{ $data->message }}</td>
+
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+
+        </div>
+
+
+        @include('admin.adminscript')
+    </body>
+
+</html>
+
+
+
+
+
+==================================================================
+
+
+# ROUTES / web.php 
+
+Route::get('/viewreservation', [AdminController::class, 'viewreservation']);
+
+
+# APP / HTTP / CONTROLLERS / AdminController.php
+
+public function viewreservation()
+{
+    $data = reservation::all();
+
+    return view('admin.adminreservation', compact('data'));
+}
+
+# CHECK ADMIN RESERVATIONS TABLE
+
+
+
+####################### CHEF FEATURE 
+
+# RESOURCES / VIEWS / home.blade.php 
+
+# COPY CHEF AREA 
+
+# RESOURCES / VIEWS / *create foodchef.blade.php 
+
+## PASTE THIS!!!!=========================================
+
+
+        <!-- ***** Chefs Area Starts ***** -->
+        <section class="section" id="chefs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 offset-lg-4 text-center">
+                        <div class="section-heading">
+                            <h6>Our Chefs</h6>
+                            <h2>We offer the best ingredients for you</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    @foreach ($data2 as $data2)
+                        <div class="col-lg-4">
+                            <div class="chef-item">
+                                <div class="thumb">
+                                    <div class="overlay"></div>
+                                    <ul class="social-icons">
+                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                                    </ul>
+                                    <img alt="Chef #1" height="200" src="chefimage/{{ $data2->image }}"
+                                        width = "200">
+                                </div>
+                                <div class="down-content">
+                                    <h4>{{ $data2->name }}</h4>
+                                    <span>{{ $data2->speciality }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+        </section>
+        <!-- ***** Chefs Area Ends ***** -->
+
+
+
+
+================================================
+
+# RESOURCES / VIEWS / home.blade.php 
+
+* below @include('food') 
+
+* PASTE THIS!! 
+
+
+@include('foodchef');
+
+# RESOURCES / VIEWS / ADMIN / *create adminchef.blade.php 
+
+# PASTE THIS INSIDE =========================================
+
+
+<x-app-layout>
+
+</x-app-layout>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        @include('admin.admincss')
+    </head>
+
+    <body>
+
+        <div class = "container-scroller">
+
+            @include('admin.navbar')
+            <div style="text-align: center;">
+                <br><br><br>
+                <h2>Add Chef</h2>
+                <form action="{{ url('uploadchef') }}" enctype="multipart/form-data" method="post"
+                    style="max-width: 400px; margin: auto;">
+                    @csrf <!-- Cross-Site Request Forgery -->
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="name" style="display: inline-block; width: 100px;">Name:</label>
+                        <input id="name" name="name" placeholder="Enter name" required
+                            style="color: blue; width: calc(100% - 120px);" type="text" />
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="speciality" style="display: inline-block; width: 100px;">Speciality:</label>
+                        <input id="speciality" name="speciality" placeholder="Enter the Speciality" required
+                            style="color: blue; width: calc(100% - 120px);" type="text" />
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label for="image" style="display: inline-block; width: 100px;">Image:</label>
+                        <input id="image" name="image" required type="file" />
+                    </div>
+
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary" style="background-color: white; color: black;"
+                            type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div style="margin-top: 50px;">
+                <h2 class = "mx-5">Chef List</h2>
+                <table class="mx-5 table" style="color: white; margin: auto;">
+                    <thead>
+                        <tr style="color: white">
+                            <th style="padding: 15px; color: white">Chef Name</th>
+                            <th style="padding: 15px; color: white">Speciality</th>
+                            <th style="padding: 15px; color: white">Image</th>
+                            <th style="padding: 15px; color: white">Action</th>
+                            <th style="padding: 15px; color: white">Action2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $chef)
+                            <tr align="center">
+                                <td>{{ $chef->name }}</td>
+                                <td>{{ $chef->speciality }}</td>
+                                <td><img height="100" src="/chefimage/{{ $chef->image }}" width="100"></td>
+                                <td><a class="btn btn-info" href="{{ url('/updatechef', $chef->id) }}">Update</a></td>
+                                <td><a class="btn btn-danger" href="{{ url('/deletechef', $chef->id) }}">Delete</a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+
+
+            @include('admin.adminscript')
+    </body>
+
+</html>
+
+
+
+
+=============================================================================
+
+
+# TERMINAL 
+
+php artisan make:model Foodchef -m 
+
+
+# DATABASE / MIGRATIONS / create_foodchef 
+
+# BELOW $table->id(); 
+
+$table->string('name')->nullable();
+$table->string('speciality')->nullable();
+$table->string('image')->nullable();
+
+
+# TERMINAL 
+
+php artisan migrate 
+
+# ROUTES / web.php 
+
+Route::get('/uploadchef', [AdminController::class, 'uploadchef']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+# PASTE THIS ===============================================
+
+use App\Models\Foodchef;
+
+    public function uploadchef(Request $request)
+    {
+
+        $data = new Foodchef();
+
+        $image = $request->image;
+
+        $imagename = time().'.'.$image->getClientOriginalExtension();
+
+        $request->image->move('chefimage', $imagename);
+
+        $data->image = $imagename;
+
+        $data->name = $request->name;
+
+        $data->speciality = $request->speciality;
+
+        $data->save();
+
+        return redirect()->back();
+
+    }
+
+
+================================================================
+
+# TO FIX $data2 ERROR 
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+* FIND index(); remove the code,  then paste this
+
+$data2 = Foodchef::all();
+
+$data = food::all();
+
+return view('home', compact('data', 'data2'));
+
+# RESOURCES / VIEWS / ADMIN / navbar.blade.php 
+
+find chef url 
+
+change it to this! {{ url ('viewchef')}}
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+    public function viewchef()
+    {
+
+        $data = foodchef::all();
+
+        return view('admin.adminchef', compact('data'));
+    }
+
+# ADVANCE DEBUGGIN DELETE!!
+
+- APP / HTTP / MODELS / FOODCHEF
+
+- DATABASE / MIGRATIONS / CREATE_FOODCHEF
+
+# DO THIS AGAINNNN!!!! 
+
+php artisan make:model Foodchef -m 
+
+
+# DATABASE / MIGRATIONS / create_foodchef 
+
+# BELOW $table->id(); 
+
+$table->string('name')->nullable();
+$table->string('speciality')->nullable();
+$table->string('image')->nullable();
+
+
+# TERMINAL 
+
+php artisan migrate 
+
+* TRY TO LOGIN USER FOR FOODCHEF HOME 
+
+* ERROR $DATA2 
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+find redirects() add this!!
+
+$data2 = Foodchef::all();
+
+return view('home', compact('data', 'data2'));
+
+
+######################## UPDATE & DELETE ON CHEF 
+
+# Route::get('/updatechef/{id}', [AdminController::class, 'updatechef']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function updatechef($id)
+{
+    $data = Foodchef::find($id);
+
+    return view('admin.updatechef', compact('data'));
+
+}
+
+# RESOURCES / VIEWS / ADMIN / *create updatechef.blade.php 
+
+## PASTE THISS!!!! =======================================
+
+
+<x-app-layout>
+
+</x-app-layout>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <base href = "/public" />
+        @include('admin.admincss')
+    </head>
+
+    <body>
+
+        <div class = "container-scroller">
+
+            @include('admin.navbar')
+
+            <form action="{{ url('/updatefoodchef', $data->id) }}" enctype="multipart/form-data" method="post">
+                @csrf
+
+                <div style="margin-bottom: 15px; mx-5">
+                    <br>
+                    <label for="name">Chef Name:</label>
+                    <input name="name" style="color: blue; width: 100%;" type="text" value="{{ $data->name }}">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="speciality">Speciality:</label>
+                    <input name="speciality" style="color: blue; width: 100%;" type="text"
+                        value="{{ $data->speciality }}">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="old_image">Old Image:</label>
+                    <img src="/chefimage/{{ $data->image }}" style="max-width: 300px; max-height: 200px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label for="new_image">New Image:</label>
+                    <input name="image" type="file">
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="btn btn-primary" style="background-color: white; color: black;" type="submit">Update
+                        Chef</button>
+                </div>
+            </form>
+
+
+        </div>
+
+
+        @include('admin.adminscript')
+    </body>
+
+</html>
+
+
+
+=====================================================================
+
+# ROUTES / web.php 
+
+Route::get('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+# PASTE THISS ===================================
+
+    public function updatefoodchef(Request $request, $id)
+    {
+        $data = Foodchef::find($id);
+
+        $image = $request->image;
+
+        if ($image) {
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+
+            $request->image->move('chefimage', $imagename);
+
+            $data->image = $imagename;
+        }
+
+        $data->name = $request->name;
+
+        $data->speciality = $request->speciality;
+
+        $data->save();
+
+        return redirect()->back();
+
+    }
+	
+=======================================================
+
+# TERMINAL 
+
+php artisan make:model Cart -m
+
+# DATABASE / MIGRATIONS / create_carts 
+
+* PASTE THIS BELOW $table->id();
+
+$table->string('user_id')->nullable();
+$table->string('food_id')->nullable();
+$table->string('quantity')->nullable();
+
+
+
+# ROUTES / web.php 
+
+Route::post('/deletechef/{id}', [AdminController::class, 'deletechef']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function deletechef($id)
+{
+
+    $data = Foodchef::find($id);
+
+    $data->delete();
+
+    return redirect()->back();
+}
+
+
+
+################ ADD PRODUCT TO CART
+
+ 
+# ROUTES / web.php 
+
+Route::post('/addcart', [HomeController::class, 'addcart']);
+
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+
+use App\Models\Cart;
+use Illuminate\Http\Request;
+
+
+public function addcart(Request $request, $id)
+{
+
+    if (Auth::id()) {
+        $user_id = Auth::id();
+
+        $foodid = $id;
+
+        $quantity = $request->quantity;
+
+        $cart = new cart;
+
+        $cart->user_id = $user_id;
+
+        $cart->food_id = $foodid;
+
+        $cart->quantity = $quantity;
+
+        $cart->save();
+
+        return redirect()->back();
+    } else {
+        return redirect('/login');
+    }
+}
+
+# TRY ADD TO CART THEN CHECK DATABASE 
+
+
+# RESOURCES / VIEWS / home.blade.php 
+
+find "Contact Us" Then below it PASTE THIS! 
+
+==============================================================
+
+<li class="scroll-to-section"><img src = "{{ asset('assets/images/cart.png') }}"
+    width="20"></li>
+    
+    <li class="scroll-to-section">
+    
+    @auth
+    <a href = "{{ url('/showcart', Auth::user()->id) }}">
+        <div>
+            Cart[{{ $count }}]
+        </div>
+    </a>
+    @endauth
+    
+    @guest
+    
+    Cart[0]
+    @endguest
+    </a>
+</li>
+
+
+================================================================
+
+
+############################# SHOW CART DATA
+
+# ROUTES / web.php 
+
+Route::get('/showcart/{id}', [HomeController::class, 'showcart']);
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+
+public function showcart(Request $request, $id)
+{
+
+    if (Auth::id() == $id) {
+
+        $count = cart::where('user_id', $id)->count();
+
+        $data2 = cart::select('*')->where('user_id', '=', $id)->get();
+
+        $data = cart::where('user_id', $id)->join('food', 'carts.food_id', '=', 'food.id')->get();
+
+        return view('showcart', compact('count', 'data', 'data2'));
+
+    } else {
+        return redirect()->back();
+    }
+
+}
+
+
+# RESOURCES / VIEWS / *create showcart.blade.php 
+
+====================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <base href = "/public" />
+
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+        <meta content="" name="description">
+        <meta content="" name="author">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
+            rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
+            rel="stylesheet">
+
+        <title>Patrick Cafe</title>
+        <script src="assets/js/jquery-2.1.0.min.js"></script>
+
+        <!--
+
+TemplateMo 558 Klassy Cafe
+
+https://templatemo.com/tm-558-klassy-cafe
+
+-->
+        <!-- Additional CSS Files -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+
+        <link href="assets/css/font-awesome.css" rel="stylesheet" type="text/css">
+
+        <link href="assets/css/style.css" rel="stylesheet">
+
+        <link href="assets/css/owl-carousel.css" rel="stylesheet">
+
+        <link href="assets/css/lightbox.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <!-- ***** Preloader Start ***** -->
+        <div id="preloader">
+            <div class="jumper">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <!-- ***** Preloader End ***** -->
+
+
+        <!-- ***** Header Area Start ***** -->
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <!-- ***** Logo Start ***** -->
+                            <a class="logo" href="index.html">
+                                <img align="klassy cafe html template" src="assets/images/klassy-logo.png">
+                            </a>
+                            <!-- ***** Logo End ***** -->
+                            <!-- ***** Menu Start ***** -->
+                            <ul class="nav">
+                                <li class="scroll-to-section"><a class="active" href="#top">Home</a></li>
+                                <li class="scroll-to-section"><a href="#about">About</a></li>
+
+                                <!--
+                            <li class="submenu">
+                                <a href="javascript:;">Drop Down</a>
+                                <ul>
+                                    <li><a href="#">Drop Down Page 1</a></li>
+                                    <li><a href="#">Drop Down Page 2</a></li>
+                                    <li><a href="#">Drop Down Page 3</a></li>
+                                </ul>
+                            </li>
+                        -->
+                                <li class="scroll-to-section"><a href="#menu">Menu</a></li>
+                                <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
+                                <li class="submenu">
+                                    <a href="javascript:;">Features</a>
+                                    <ul>
+                                        <li><a href="#">Features Page 1</a></li>
+                                        <li><a href="#">Features Page 2</a></li>
+                                        <li><a href="#">Features Page 3</a></li>
+                                        <li><a href="#">Features Page 4</a></li>
+                                    </ul>
+                                </li>
+                                <!-- <li class=""><a href="https://templatemo.com" rel="sponsored" target="_blank">External URL</a></li> -->
+                                <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
+
+                                <li class="scroll-to-section"><img src = "{{ asset('assets/images/cart.png') }}"
+                                        width="20"></li>
+
+                                <li class="scroll-to-section">
+
+                                    @auth
+                                        <a href = "{{ url('/showcart', Auth::user()->id) }}">
+                                            <div>
+                                                Cart[{{ $count }}]
+                                            </div>
+                                        </a>
+                                    @endauth
+
+                                    @guest
+
+                                        Cart[0]
+                                    @endguest
+                                    </a>
+                                </li>
+
+                                <li>
+                                    @if (Route::has('login'))
+                                        <div class="z-10 p-6 text-right sm:fixed sm:right-0 sm:top-0">
+                                            @auth
+                                    <li>
+                                        <x-app-layout>
+
+                                        </x-app-layout>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a class="font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500"
+                                            href="{{ route('login') }}">Log in</a>
+                                    </li>
+                                    @if (Route::has('register'))
+                                        <li>
+                                            <a class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:rounded-sm focus:outline focus:outline-2 focus:outline-red-500"
+                                                href="{{ route('register') }}">Register</a>
+                                        </li>
+                                    @endif
+                                @endauth
+                    </div>
+                    @endif
+
+
+                    </ul>
+                    <!-- ***** Menu End ***** -->
+                    </nav>
+                </div>
+            </div>
+            </div>
+        </header>
+
+        <div id = "top">
+            <table align="center">
+                <tr>
+                    <th style = "padding: 30px; ">Food Name</th>
+                    <th style = "padding: 30px; ">Price</th>
+                    <th style = "padding: 30px; ">Quantity</th>
+                    <th style = "padding: 30px; ">Action</th>
+
+                </tr>
+
+                <form action = "{{ url('orderconfirm') }}" method = "POST">
+
+                    @csrf
+
+
+
+                    @foreach ($data as $data)
+                        <tr align = "center">
+
+                            <td>
+                                <input {{ $data->title }} hidden name = "foodname[]" type = "text"
+                                    value = "{{ $data->title }}">
+                                {{ $data->title }}
+
+                            <td>
+                                <input {{ $data->price }} hidden name = "price[]" type = "text"
+                                    value = "{{ $data->price }}">
+                                {{ $data->price }}
+                            </td>
+
+                            <td>
+                                <input {{ $data->quantity }} hidden name = "quantity[]" type = "text"
+                                    value = "{{ $data->quantity }}">
+                                {{ $data->quantity }}
+                            </td>
+
+                        </tr>
+                    @endforeach
+
+                    @foreach ($data2 as $data2)
+                        <tr style = "position: relative; top: -76px; right: -390px; color: red;">
+                            <td><a class = "" href = "{{ url('/remove', $data2->id) }}">Remove</a></td>
+
+                        </tr>
+                    @endforeach
+
+            </table>
+
+            <div align = "center" style = "padding: 10px">
+
+                <button class = "btn btn-warning" id = "order" type = "button">Order Now</button>
+
+            </div>
+
+            <div align = "center" id = "appear" style="padding: 10px; display: none">
+
+                <div style="padding: 10px">
+                    <label>Name</label>
+                    <input name = "name" placeholder="name" type = "text" />
+                </div>
+
+                <div style="padding: 10px">
+                    <label>Phone</label>
+                    <input name = "phone" placeholder="Phone Number" type = "number" />
+                </div>
+
+                <div style="padding: 10px">
+                    <label>Address</label>
+                    <input name = "address" placeholder="Address" type = "text" />
+                </div>
+
+                <div style="padding: 10px">
+
+                    <input class = "btn btn-success" style = "color: black" type = "Submit"
+                        value = "Order Confirm" />
+
+                    <button class = "btn btn-danger" id = "close" style = "color: black"
+                        type = "button">Close</button>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        </form>
+
+
+        <script type="text/javascript">
+            $("#order").click(
+
+                function() {
+                    $("#appear").show();
+                }
+
+            );
+
+            $("#close").click(
+
+                function() {
+                    $("#appear").hide();
+                }
+
+            );
+        </script>
+
+        <!-- jQuery -->
+        <script src="assets/js/jquery-2.1.0.min.js"></script>
+
+        <!-- Bootstrap -->
+        <script src="assets/js/popper.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+
+        <!-- Plugins -->
+        <script src="assets/js/owl-carousel.js"></script>
+        <script src="assets/js/accordions.js"></script>
+        <script src="assets/js/datepicker.js"></script>
+        <script src="assets/js/scrollreveal.min.js"></script>
+        <script src="assets/js/waypoints.min.js"></script>
+        <script src="assets/js/jquery.counterup.min.js"></script>
+        <script src="assets/js/imgfix.min.js"></script>
+        <script src="assets/js/slick.js"></script>
+        <script src="assets/js/lightbox.js"></script>
+        <script src="assets/js/isotope.js"></script>
+
+        <!-- Global Init -->
+        <script src="assets/js/custom.js"></script>
+        <script>
+            $(function() {
+                var selectedClass = "";
+                $("p").click(function() {
+                    selectedClass = $(this).attr("data-rel");
+                    $("#portfolio").fadeTo(50, 0.1);
+                    $("#portfolio div").not("." + selectedClass).fadeOut();
+                    setTimeout(function() {
+                        $("." + selectedClass).fadeIn();
+                        $("#portfolio").fadeTo(50, 1);
+                    }, 500);
+
+                });
+            });
+        </script>
+    </body>
+
+</html>
+
+
+
+==============================================================
+
+##### DELETE FEATURE ON CART 
+
+# ROUTES /  web.php 
+
+Route::get('/remove/{id}', [HomeController::class, 'remove']);
+
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+
+#### ORDERING FEATURE 
+
+# TERMINAL  
+
+php artisan make:model Orders -m
+
+# DATABASE / MIGRATIONS / create_order 
+
+* BELOW $table->id(); 
+
+# PASTE THIS!!! 
+
+$table->string('foodname')->nullable();
+$table->string('price')->nullable();
+$table->string('quantity')->nullable();
+$table->string('name')->nullable();
+$table->string('phone')->nullable(); 
+$table->string('address')->nullable();
+
+*check showcart.blade.php 
+
+# TERMINAL 
+
+php artisan migrate
+
+# ROUTES / web.php 
+
+Route::post('/orderconfirm', [HomeController::class, 'orderconfirm']);
+
+# APP / HTTP / CONTROLLERS / HomeController.php 
+
+use App\Models\Orders;
+
+public function orderconfirm(Request $request)
+{
+
+    foreach ($request->foodname as $key => $foodname) {
+        $data = new orders;
+
+        $data->foodname = $foodname;
+
+        $data->price = $request->price[$key];
+
+        $data->quantity = $request->quantity[$key];
+
+        $data->name = $request->name;
+
+        $data->phone = $request->phone;
+
+        $data->address = $request->address;
+
+        $data->save();
+
+    }
+
+    return redirect()->back();
+
+}
+
+
+############### DISPLAY ORDERS DATA ON
+
+# RESOURCES / VIEWS / ADMIN / Navbar.blade.php 
+
+* Below Reservations 
+
+
+<li class="nav-item menu-items">
+    <a class="nav-link" href="{{ url('/orders') }}">
+        <span class="menu-icon">
+            <i class="mdi mdi-chart-bar"></i>
+        </span>
+        <span class="menu-title">Orders</span>
+    </a>
+</li>
+
+
+
+# ROUTES / web.php 
+
+Route::get('/orders', [AdminController::class, 'orders']);
+
+
+# APP / HTTP / CONTROLLERS / AdminControllers.php 
+
+use App\Models\Orders;
+
+
+public function orders()
+{
+    $data = orders::all();
+
+    return view('admin.orders', compact('data'));
+
+}
+
+
+# RESOURCES / VIEWS / ADMIN / *create orders.blade.php 
+
+* PASTE THIS INSIDE!!
+
+=======================================================================
+
+<x-app-layout>
+
+</x-app-layout>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        @include('admin.admincss')
+    </head>
+
+    <body>
+
+        <div class = "container-scroller">
+
+            @include('admin.navbar')
+
+            <div class = "container">
+
+
+                <h1>Customers Orders</h1>
+
+                <form action = "{{ url('/search') }}" method = "get">
+
+                    @csrf
+
+                    <input name = "search" style = "color: blue;" type = "text">
+
+                    <input class = "btn btn-success" type = "submit" value = "Search">
+
+                </form>
+                <br><br><br>
+                <table bgcolor = "black" class = "table" style = "color: white">
+                    <tr align = "center">
+                        <td style = "padding: 20px">Name</td>
+                        <td style = "padding: 20px">Phone Number</td>
+                        <td style = "padding: 20px">Address</td>
+                        <td style = "padding: 20px">Foodname</td>
+                        <td style = "padding: 20px">Price</td>
+                        <td style = "padding: 20px">Quantity</td>
+                        <td style = "padding: 20px">Total Price</td>
+
+                    </tr>
+
+                    @foreach ($data as $data)
+                        <tr align="center" style = "background-color: black">
+                            <td>{{ $data->name }}</td>
+                            <td>{{ $data->phone }}</td>
+                            <td>{{ $data->address }}</td>
+                            <td>{{ $data->foodname }}</td>
+                            <td>P{{ $data->price }}</td>
+                            <td>{{ $data->quantity }}</td>
+                            <td>P{{ $data->price * $data->quantity }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+
+        </div>
+
+
+        @include('admin.adminscript')
+    </body>
+
+</html>
+
+
+=============================================================================
+
+
+##### BACK-END OF SEARCH FORM 
+
+# ROUTERS / web.php 
+
+Route::get('/search', [AdminController::class, 'search']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function search(Request $request)
+{
+
+    $search = $request->search;
+
+    $data = orders::where('name', 'Like', '%'.$search.'%')->orWhere('foodname', 'Like', '%'.$search.'%')->get();
+
+    return view('admin.orders', compact('data'));
+
+}
+
+
+### BUG FIXESSS!!!
+
+# FORCED FEATURES 
+ 
+!!!  LOGIN AN ACCOUNT                  !!!!   
+!!!  IF REMOVE /redirects = Error      !!!!  
+
+* how to fix? 
+
+# APP / HTTP / CONTROLLERS / HomeControllers.php 
+
+* find index() & ADD THIS ABOVE!! 
+
+
+!!! on home (no account) put "/viewreservation"  !!!
+!!! ERROR WILL APPEAR                            !!!
+
+# HOW TO FIX ??? 
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+# FIND viewreservation()
+
+use Illuminate\Support\Facades\Auth;
+
+
+if (Auth::id()) {
+    $data = reservation::all();
+
+    return view('admin.adminreservation', compact('data'));
+
+} else {
+    return redirect('login');
+}
+
+
+
+
+
+
