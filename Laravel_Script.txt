@@ -1,20 +1,34 @@
 Laravel Restaurant Project
 
-#################################### SETUP CONFIG
+#################### 
+SETUP CONFIG
+####################
 
 #CHECK EVERYTHING WE NEED, 
 #OPEN CMD
 
-php -v 
+php -v (8.2.17)
 php --ini (Loaded Config File: xampp\php\php.ini) 
-composer -v
-npm -v 
-node -v 
+composer -v (2.7.2)
+npm -v (9.5.1)
+node -v  (19.8.1)
 7z
+
+VSCode Extension: 
+PHP Intelephense, Ben (Shift + Alt + F) 
+Laravel Extension Pack (Winnie)
+
 
 try: 
 composer glocal require laravel/installer
 
+XAMPP config: 
+
+extension=fileinfo
+extension=intl
+extension=mysqli
+extension=pdo_mysql
+extension=pdo_sqlite
 
 # phpmyadmin
 Create Database - 'restaurant' 
@@ -71,7 +85,9 @@ class HomeController extends Controller
 
 
 
-#################################### LOGIN AND REGISTRATION
+##########################   
+LOGIN AND REGISTRATION
+##########################   
 
 # TERMINAL
 MAKE SURE! 'extension: fileinfo" uncommented
@@ -128,9 +144,8 @@ php artisan migrate
 # COPY THIS ============================
 
 
-# PASTE NYO SA resources/views/home.blade.php line (find around conta line 85 then double enter)
-
-# RESOURCES / VIEWS / navigation-menu.blade.php
+# PASTE NYO SA resources/views/home.blade.php line 
+(find around contact us line 85 then double enter)
 
 # CONFIG / fortify.php
 
@@ -151,9 +166,11 @@ delete logo & navigation links
 
 
 
-#########  FOR LARAVEL JETSTREAM COMPONENTS 
+##########################   
+FOR LARAVEL JETSTREAM COMPONENTS 
+##########################  
 
-# RESOURCES / VIEWS / AUTH / authentication-card-logo.blade.php 
+# RESOURCES / VIEWS / COMPONENTS / authentication-card-logo.blade.php 
 
 * REMOVE EVERYTHING AND PASTE THIS!! =============================
 
@@ -294,9 +311,10 @@ delete logo & navigation links
     }
 </script>
 
-
-#### FORGOT PASSWORD FEATURE
-#### MAKE SURE YOU HAVE 1 GMAIL ACCOUNT WITH 2-FACTOR-AUTHETICATION 
+##########################   
+FORGOT PASSWORD FEATURE
+MAKE SURE YOU HAVE 1 GMAIL ACCOUNT WITH 2-FACTOR-AUTHETICATION 
+##########################   
 
 # .env 
 
@@ -341,8 +359,9 @@ php artisan config:cache
 php artisan vendor:publish --tag=laravel-notifications
 php artisan vendor:publish --tag=laravel-mail
 
-
-#################################### ADMIN FEATURE
+##########################   
+ADMIN FEATURE
+##########################   
 
 # RESOURCES > VIEWS / 
 
@@ -360,6 +379,10 @@ from
 # ROUTES > web.php
 
 Route::get('/redirects', [HomeController::class, 'redirects']);
+
+# on route::get('/')  
+
+* REPLACE "WELCOME" TO "HOME" 
 
 # APP > HTTP > CONTROLLERS > HomeController.php
 
@@ -389,8 +412,6 @@ ADMIN TEMPLATE
 
 * create an admin folder inside public
 
-git clone https://github.com/Patargz12/Cafe_Admin.git
-
 * paste index and assets inside admin folder 
 
 # RESOURCES / VIEWS / ADMIN / adminhome.blade.php
@@ -407,33 +428,47 @@ PASTE NYO SA adminhome.blade.php
 
 # PUBLIC / ADMIN /
 
-copy index/html PASTE NYO SA adminhome.blade.php 
+copy admin/index.html PASTE NYO SA adminhome.blade.php 
 
 
 # REGISTER 1 ADMIN ACCOUNT AND TURN USERTYPE TO 1
 
 # CHANGE ALL "assets/.../..." to "admin/assets/.../..."
 
-# DELETE CONTENTS BELOW SIDEBAR UNTIL FOOTER
+#############
 
-# DELETE <li class = "nav-item profile" />
+TRY TO LOGIN AN ADMIN ACCOUNT!!
 
-# DELETE Basic UI Elements, Icons, User Pages, Documentation on SIDEBAR
+IF ERROR APPEARS!! ENTER THIS!
 
-# CHANGE THE REMANING FOUR TO Users, Foods, Chefs, Reservations
+# TERMINAL 
 
-# CUT THE 'container-scroller' upto 'main-panel-ends' 
+php artisan config:clear
+php artisan route:cache
 
-# DELETE 2 unnecessary </div> 'main-panel-ends' and 'page-body-wrapper ends'
+
+#############
+
+----- EDIT THE ADMIN TEMPLATE -----------
+
+1. DELETE CONTENTS BELOW SIDEBAR UNTIL FOOTER
+
+2. DELETE <li class = "nav-item profile" />
+
+3. DELETE Basic UI Elements, Icons, User Pages, Documentation on SIDEBAR
+
+4. CHANGE THE REMANING FOUR TO Users, Foods, Chefs, Reservations
+
+5. CUT THE 'container-scroller' upto 'main-panel-ends' 
+
+6. DELETE 2 unnecessary </div> 'main-panel-ends' and 'page-body-wrapper ends'
 
 the last part must be
 
-" 
-<!-- partial -->
-</div>
-"
 
-# RESOURCES / ADMIN / *CREATE A NEW FILE navbar.blade.php
+
+
+ RESOURCES / ADMIN / *CREATE A NEW FILE navbar.blade.php
 
 PASTE NAVBAR!
 
@@ -441,9 +476,9 @@ PASTE NAVBAR!
 
 below <body> 
 
-@include('admin.navbar'); 
+@include('admin.navbar');
 
--- COPY ALL INSIDE <head>
+-- CUT ALL INSIDE <head>
 
 # RESOURCES / ADMIN / *CREATE admincss.blade.php
 
@@ -453,9 +488,9 @@ PASTE EVERYTHING HERE
 
 inside <head>
 
-@include('admin.admincss');
+@include('admin.admincss')
 
-COPY ALL SCRIPT
+CUT ALL SCRIPT
 
 # RESOURCES / ADMIN / *CREATE adminscript.blade.php
 
@@ -465,16 +500,24 @@ PASTE EVERYTHING HERE
 
 above </body>
 
-@include('admin.adminscript');
+@include('admin.adminscript')
+
+# RESOURCES / ADMIN / navbar.blade.php 
+
+# REPLACE "BRAND-LOGO" TO <H3>ADMIN</H3>
+
+
+----- EDIT THE ADMIN TEMPLATE -----------
 
 
 
 
 
+##########################   
+DISPLAY USERS FROM DATABASE
+##########################   
 
-#################################### DISPLAY USERS FROM DATABASE
-
-# RESOURCES / ADMIN / navbar.blade.php
+# RESOURCES / VIEWS / ADMIN / navbar.blade.php
 
 look for "Users", Change href to ---      href = "{{url('/users')}}"
 
@@ -483,6 +526,8 @@ look for "Users", Change href to ---      href = "{{url('/users')}}"
 use App\Http\Controllers\AdminController;
 
 Route::get('/users', [AdminController::class, 'user']);
+
+# TERMINAL 
 
 php artisan make:controller AdminController
 
@@ -555,6 +600,15 @@ Delete "container-scroller"
 
 use App\Models\User;
 
+# TRY TO ACCESS IT! 
+
+#### IF ROUTING ERROR APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
+
 function user: -----
 
 $data = user::all();
@@ -575,14 +629,20 @@ public function deleteuser($id)
     return redirect()->back();
 }
 
+#### IF ROUTING ERROR APPEARS! 
 
+php artisan config:clear
+php artisan route:cache
 
+####
 
-#################################### FOOD MENU BACK END
+##########################   
+FOOD MENU BACK END
+##########################   
 
 # RESOURCES / VIEWS / home.blade.php
 
-copy all menu-area
+Cut all "menu area"
 
 * create food.blade.php file 
 
@@ -592,7 +652,7 @@ paste everything there!
 
 *above <!-- ***** Chefs Area Starts ***** -->
 
-@include('food');
+@include('food')
 
 # TERMINAL 
 
@@ -606,6 +666,10 @@ $table->string("title")->nullable();
 $table->string("price")->nullable();
 $table->string("image")->nullable();
 $table->string("description")->nullable();
+
+# TERMINAL 
+
+php artisan migrate
 
 # RESOURCES / VIEWS / ADMIN / navbar.blade.php 
 
@@ -718,6 +782,12 @@ PASTE THIS ===================================================================
 
 ====================================================================================
 
+#### IF ROUTING ERROR APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
 
 
 # ROUTES / web.php
@@ -730,6 +800,8 @@ Route::post('/uploadfood', [AdminController::class, 'upload']);
 PASTE THIS ==============================================================
 
 use Illuminate\Http\Request;
+
+use App\Models\Food;
 
 public function upload(Request $request)
 {
@@ -757,13 +829,21 @@ public function upload(Request $request)
 
 # TRY TO ADD NEW FOOD
 
+#### IF ROUTING ERROR APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
+
 
 ==================================================================================
 
+##########################
+DISPLAY FOOD DATA ON FRONT-END
+##########################
 
-######################################### DISPLAY FOOD DATA ON FRONT-END
-
-# APP / HTTP / HomeController.php 
+# APP / HTTP / CONTROLLERS /  HomeController.php 
 
 use App\Models\Food;
 
@@ -773,7 +853,7 @@ use App\Models\Food;
 $data = food::all();
 return view('home',compact("data"));
 
-# RESOURCES / VIEWS / home.blade.php
+# RESOURCES / VIEWS / food.blade.php
 
 *remove "class = 'item' " keep ONLY 1!!
 
@@ -784,7 +864,7 @@ return view('home',compact("data"));
 
 @foreach ($data as $data)
 <form action = "{{ url('/addcart', $data->id) }}" method = "post">
-    @csrf
+    @csrf <!-- Cross-site request forgeries -->
     <div class="item">
         <div class='card'
             style = "background-image: url('/foodimage/{{ $data->image }}');">
@@ -817,11 +897,12 @@ return view('home',compact("data"));
 
 ============================================================================
 
-# ERROR $DATA  *fix !11111111111
+# ERROR $DATA  *fix !!!!!
 
 # APP / HTTP / CONTROLLERS / HomeController.php 
 
-*on public function redirects(); ADD THIS ABOVE $usertype = Auth 
+*on public function redirects(); ADD THIS ABOVE 
+"$usertype = Auth" 
 
 $data = food::all();
 
@@ -842,8 +923,18 @@ Route::get('/', function () {
 
 *CHANGE "/home" TO   "/" 
 
+#### IF ERROR STILL APPEARS! 
 
-################################################### CREATE DELETE FUNCTION ON FOOD 
+php artisan config:clear
+php artisan route:cache
+
+####
+
+
+
+###################################
+CREATE DELETE FUNCTION ON FOOD 
+###################################
 
 # APP / HTTP / CONTROLLERS / AdminController.php 
 
@@ -854,6 +945,11 @@ Route::get('/', function () {
 $data = food::all();
 
 return view('admin.foodmenu',compact("data"));
+
+# RESOURCES / VIEWS / ADMIN / 
+
+*UNCOMMENT FOREACH FUNCTION 
+
 
 # ROUTES / web.php 
 
@@ -872,15 +968,36 @@ public function deleteuser($id)
     return redirect()->back();
 }
 
+====
+
+CORRECT CODE: 
+
+    public function deletemenu($id)
+    {
+        $data = food::find($id);
+
+        $data->delete();
+
+        return redirect()->back();
+    }
+
+#### IF ERROR STILL APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
 
 
-###################################### CREATE UPDATE FUNCTION ON FOOD  
+################################## 
+CREATE UPDATE FUNCTION ON FOOD
+##################################   
 
 # ROUTES / WEB.PHP 
 
 Route::get('/updateview/{id}', [AdminController::class, 'updateview']);
 
-# APP / HTTP / CONTROLLERS / AppController.php  
+# APP / HTTP / CONTROLLERS / AdminController.php  
 
 public function updateview($id)
 {
@@ -996,19 +1113,25 @@ public function update(Request $request, $id)
 # LOGOUT FIRST!!!! THEN TRY TO UPDATE FOOD 
 
 
+#### IF ERROR STILL APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
 
 
 
 
-
-
-####################### RESERVATION FEATURE 
+##########################
+RESERVATION FEATURE 
+##########################
 
 # RESOURCES / VIEWS / *create reservation.blade.php 
 
 # RESOURCES / VIEWS / home.blade.php 
 
-* COPY RESERVATION CODE AND PASTE IT ON reservation.blade.php 
+* CUT ID = "reservation" CODE AND PASTE IT ON reservation.blade.php 
 
 # FINAL RESERVATION CODE 
 
@@ -1133,7 +1256,11 @@ public function update(Request $request, $id)
 =====================================================
 
 
+# RESOURCES / VIEWS / home.blade.php
 
+# ABOVE "footer" 
+
+ @include('reservation')
 
 
 # TERMINAL 
@@ -1143,6 +1270,9 @@ php artisan make:model Reservation -m
 
 # DATABASE / MIGRATIONS / create_reservations
 
+* below $table->id()
+
+$table->string('name')->nullable;
 $table->string('email')->nullable;
 $table->string('phone')->nullable;
 $table->string('guest')->nullable;
@@ -1189,6 +1319,28 @@ public function reservation(Request $request)
 
 # TRY RESERVING AND CHECK DATABASE!
 
+#### IF ERROR STILL APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
+
+# ERROR APPEARS FOR 
+"undefined method():reservation()"
+
+# ROUTES / web.php 
+
+turn HomeController to AdminController 
+
+Route::post('/reservation', [AdminController::class, 'reservation']);
+
+
+
+
+
+
+
 # RESOURCES / VIEWS / ADMIN / *create adminreservation.blade.php 
 
 ### PASTE THIS!!  =================================================
@@ -1213,7 +1365,8 @@ public function reservation(Request $request)
             @include('admin.navbar')
 
             <div style = "position: relative; top: 70px; right: -150;">
-                <table bgcolor = "black" border="1px" class = "table" style = "color: white">
+                <H1>RESERVATIONS</H1>
+				<table bgcolor = "black" border="1px" class = "table" style = "color: white">
 
                     <tr>
                         <th style = "padding: 30px;">Name</th>
@@ -1270,15 +1423,33 @@ public function viewreservation()
 
 # CHECK ADMIN RESERVATIONS TABLE
 
+# ERROR URL CLICK! 
+
+# RESOURCES / VIEWS / ADMIN / navbar.blade.php 
+
+** FIND "reservation" 
+
+* href="{{ url('/viewreservation') }}"
 
 
-####################### CHEF FEATURE 
+#### IF ROUTING ERROR STILL APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
+
+##########################
+CHEF FEATURE 
+##########################
 
 # RESOURCES / VIEWS / home.blade.php 
 
-# COPY CHEF AREA 
+# CUT "CHEFS AREA "
 
 # RESOURCES / VIEWS / *create foodchef.blade.php 
+
+* REMOVE 2 "col-lg-4"
 
 ## PASTE THIS!!!!=========================================
 
@@ -1486,7 +1657,8 @@ use App\Models\Foodchef;
 
 # APP / HTTP / CONTROLLERS / HomeController.php 
 
-* FIND index(); remove the code,  then paste this
+* FIND function index(); remove the code,  
+* then paste this
 
 $data2 = Foodchef::all();
 
@@ -1496,7 +1668,7 @@ return view('home', compact('data', 'data2'));
 
 # RESOURCES / VIEWS / ADMIN / navbar.blade.php 
 
-find chef url 
+find chefs url 
 
 change it to this! {{ url ('viewchef')}}
 
@@ -1509,6 +1681,22 @@ change it to this! {{ url ('viewchef')}}
 
         return view('admin.adminchef', compact('data'));
     }
+	
+#### IF ROUTING ERROR STILL APPEARS! 
+
+php artisan config:clear
+php artisan route:cache
+
+####
+
+# ERROR routing viewchef() 
+
+# ROUTES / WEB.PHP 
+
+# Route::get('/viewchef', [AdminController::class, 'viewchef']);
+
+
+
 
 # ADVANCE DEBUGGIN DELETE!!
 
@@ -1529,6 +1717,33 @@ $table->string('name')->nullable();
 $table->string('speciality')->nullable();
 $table->string('image')->nullable();
 
+# POSSIBLE ERRORS! 
+
+The POST method is not supported 
+for route uploadchef.
+
+# ROUTES / web.php 
+
+* remove /uploadchef route
+*then clear config
+
+php artisan config:clear
+php artisan route:cache
+
+*try to upload chef
+* /upload chef should be unreachable
+
+* ROUTES / web.php 
+
+Route::post('/uploadchef', [AdminController::class, 'uploadchef']);
+*then clear config
+
+php artisan config:clear
+php artisan route:cache
+
+* TRY TO UPLOAD CHEF!
+
+
 
 # TERMINAL 
 
@@ -1546,10 +1761,13 @@ $data2 = Foodchef::all();
 
 return view('home', compact('data', 'data2'));
 
+##########################
+UPDATE & DELETE ON CHEF 
+##########################
 
-######################## UPDATE & DELETE ON CHEF 
+# ROUTES / web.php
 
-# Route::get('/updatechef/{id}', [AdminController::class, 'updatechef']);
+Route::get('/updatechef/{id}', [AdminController::class, 'updatechef']);
 
 # APP / HTTP / CONTROLLERS / AdminController.php 
 
@@ -1631,7 +1849,7 @@ public function updatechef($id)
 
 # ROUTES / web.php 
 
-Route::get('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
+Route::post('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
 
 # APP / HTTP / CONTROLLERS / AdminController.php 
 
@@ -1661,6 +1879,39 @@ Route::get('/updatefoodchef/{id}', [AdminController::class, 'updatefoodchef']);
 
     }
 	
+
+### IF ROUTING ERROR APPEARS
+
+php artisan config:clear
+php artisan route:cache
+
+###
+
+# ROUTES / web.php 
+
+Route::get('/deletechef/{id}', [AdminController::class, 'deletechef']);
+
+# APP / HTTP / CONTROLLERS / AdminController.php 
+
+public function deletechef($id)
+{
+
+    $data = Foodchef::find($id);
+
+    $data->delete();
+
+    return redirect()->back();
+}
+
+### IF ROUTING ERROR APPEARS
+
+php artisan config:clear
+php artisan route:cache
+
+###
+
+
+	
 =======================================================
 
 # TERMINAL 
@@ -1676,31 +1927,19 @@ $table->string('food_id')->nullable();
 $table->string('quantity')->nullable();
 
 
+# TERMINAL 
+
+
+
+
+
+##########################
+ADD PRODUCT TO CART
+##########################
 
 # ROUTES / web.php 
 
-Route::post('/deletechef/{id}', [AdminController::class, 'deletechef']);
-
-# APP / HTTP / CONTROLLERS / AdminController.php 
-
-public function deletechef($id)
-{
-
-    $data = Foodchef::find($id);
-
-    $data->delete();
-
-    return redirect()->back();
-}
-
-
-
-################ ADD PRODUCT TO CART
-
- 
-# ROUTES / web.php 
-
-Route::post('/addcart', [HomeController::class, 'addcart']);
+Route::post('/addcart/{id}', [HomeController::class, 'addcart']);
 
 
 # APP / HTTP / CONTROLLERS / HomeController.php 
@@ -1738,6 +1977,13 @@ public function addcart(Request $request, $id)
 
 # TRY ADD TO CART THEN CHECK DATABASE 
 
+### IF ROUTING ERROR APPEARS
+
+php artisan config:clear
+php artisan route:cache
+
+###
+
 
 # RESOURCES / VIEWS / home.blade.php 
 
@@ -1765,11 +2011,22 @@ find "Contact Us" Then below it PASTE THIS!
     </a>
 </li>
 
+* ERROR $COUNT
+
+* APP / HTTP / CONTROLLERS / HomeController.php 
+
+find redirects() else statement
+
+$user_id = Auth::id();
+$count = cart::where('user_id', $user_id)->count();
+return view('home', compact('data', 'data2','count'));
+
 
 ================================================================
 
-
-############################# SHOW CART DATA
+##########################
+SHOW CART DATA
+##########################
 
 # ROUTES / web.php 
 
@@ -2093,11 +2350,20 @@ https://templatemo.com/tm-558-klassy-cafe
 
 </html>
 
+# CHECK CART FRONT-END
+
+### IF ROUTING ERROR APPEARS
+
+php artisan config:clear
+php artisan route:cache
+
+###
 
 
 ==============================================================
-
-##### DELETE FEATURE ON CART 
+##########################
+DELETE FEATURE ON CART 
+##########################
 
 # ROUTES /  web.php 
 
@@ -2106,8 +2372,19 @@ Route::get('/remove/{id}', [HomeController::class, 'remove']);
 
 # APP / HTTP / CONTROLLERS / HomeController.php 
 
+public function remove($id)
+{
 
-#### ORDERING FEATURE 
+    $data = cart::find($id);
+
+    $data->delete();
+
+    return redirect()->back();
+}
+
+##########################
+ORDERING FEATURE 
+##########################
 
 # TERMINAL  
 
@@ -2166,8 +2443,16 @@ public function orderconfirm(Request $request)
 
 }
 
+### IF ROUTING ERROR APPEARS
 
-############### DISPLAY ORDERS DATA ON
+php artisan config:clear
+php artisan route:cache
+
+###
+
+##########################
+DISPLAY ORDERS DATA ON ADMIN
+##########################
 
 # RESOURCES / VIEWS / ADMIN / Navbar.blade.php 
 
@@ -2278,11 +2563,19 @@ public function orders()
 
 </html>
 
+### IF ROUTING ERROR APPEARS
+
+php artisan config:clear
+php artisan route:cache
+
+###
+
 
 =============================================================================
 
-
-##### BACK-END OF SEARCH FORM 
+##########################
+BACK-END OF SEARCH FORM 
+##########################
 
 # ROUTERS / web.php 
 
@@ -2301,6 +2594,13 @@ public function search(Request $request)
 
 }
 
+### IF ROUTING ERROR APPEARS
+
+php artisan config:clear
+php artisan route:cache
+
+###
+
 
 ### BUG FIXESSS!!!
 
@@ -2314,6 +2614,10 @@ public function search(Request $request)
 # APP / HTTP / CONTROLLERS / HomeControllers.php 
 
 * find index() & ADD THIS ABOVE!! 
+
+if (Auth::id()) {
+    return redirect('redirects');
+}
 
 
 !!! on home (no account) put "/viewreservation"  !!!
@@ -2336,9 +2640,3 @@ if (Auth::id()) {
 } else {
     return redirect('login');
 }
-
-
-
-
-
-
