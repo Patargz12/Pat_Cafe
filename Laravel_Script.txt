@@ -459,9 +459,11 @@ php artisan route:cache
 
 4. CHANGE THE REMANING FOUR TO Users, Foods, Chefs, Reservations
 
-5. CUT THE 'container-scroller' upto 'main-panel-ends' 
+5. SEARCH "sidebar-brand" delete everything
 
-6. DELETE 2 unnecessary </div> 'main-panel-ends' and 'page-body-wrapper ends'
+6. CUT THE 'container-scroller' upto 'main-panel-ends' 
+
+7. DELETE 2 unnecessary </div> 'main-panel-ends' and 'page-body-wrapper ends'
 
 the last part must be
 
@@ -855,7 +857,7 @@ return view('home',compact("data"));
 
 # RESOURCES / VIEWS / food.blade.php
 
-*remove "class = 'item' " keep ONLY 1!!
+*remove "class = 'col-lg-4' " keep ONLY 1!!
 
 * PASTE THIS BELOW class = "owl-menu-item"
 
@@ -958,15 +960,6 @@ Route::get('/deletemenu/{id}', [AdminController::class, 'deletemenu']);
 # HTTP / APP / CONTROLLERS / AdminController.php 
 
 * PASTE THIS!!
-
-public function deleteuser($id)
-{
-    $data = user::find($id);
-
-    $data->delete();
-
-    return redirect()->back();
-}
 
 ====
 
@@ -1337,10 +1330,6 @@ Route::post('/reservation', [AdminController::class, 'reservation']);
 
 
 
-
-
-
-
 # RESOURCES / VIEWS / ADMIN / *create adminreservation.blade.php 
 
 ### PASTE THIS!!  =================================================
@@ -1670,7 +1659,7 @@ return view('home', compact('data', 'data2'));
 
 find chefs url 
 
-change it to this! {{ url ('viewchef')}}
+change it to this! {{ url ('/viewchef')}}
 
 # APP / HTTP / CONTROLLERS / AdminController.php 
 
